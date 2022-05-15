@@ -39,14 +39,11 @@ public class ListActivityAdapter extends RecyclerView.Adapter<ListActivityViewHo
     @Override
     public int getItemViewType(int position) {
         String n = Name.get(position);
-        if (n.contains("7"))
-            if(n.indexOf("7")+1==n.length())
-                return 0;
-            else
-                return 1;
-
+        if(Character.toString(n.charAt(n.length() - 1)).equals("7"))
+            return 0;
         else
             return 1;
+
 
     }
 
