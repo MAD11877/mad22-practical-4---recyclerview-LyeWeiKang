@@ -24,27 +24,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Intent receivingEndListActivity = getIntent();
-        String name = receivingEndListActivity.getStringExtra("name");
-        String description = receivingEndListActivity.getStringExtra("description");
+        User user=getIntent().getParcelableExtra("user");
         TextView displayName=findViewById(R.id.displayname);
-        displayName.setText(name);
+        displayName.setText(user.name);
         TextView displayDescription=findViewById(R.id.displaydescription);
-        displayDescription.setText(description);
-        User newUser = new User(name, description,0 , true);
+        displayDescription.setText(user.description);
         Button follow=findViewById(R.id.follow);
         follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextView follow=findViewById(R.id.follow);
-                if (newUser.followed){
+                if (user.followed){
                     follow.setText("Unfollow");
-                    newUser.followed=false;
+                    user.followed=false;
                     Toast.makeText(MainActivity.this,"Followed", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     follow.setText("follow");
-                    newUser.followed=true;
+                    user.followed=true;
 
                 }
             }

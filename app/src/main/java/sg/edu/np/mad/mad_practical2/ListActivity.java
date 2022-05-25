@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
@@ -22,21 +23,19 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        ArrayList<String> name=new ArrayList<>();
-        ArrayList<String> description=new ArrayList<>();
+        RecyclerView rv=findViewById(R.id.RecyclerView);
+        ArrayList<User> userList=new ArrayList<User>();
         for(int i=0;i<20;i++){
             Random random = new Random();
             int intRandom = random.nextInt();
             Random random2 = new Random();
             int intRandom2=random2.nextInt();
-            name.add("Name"+intRandom);
-            description.add("Description"+intRandom2);
+            User user=new User("Name"+intRandom,"Description"+intRandom2,i,false);
+            userList.add(user);
         }
-        RecyclerView rv=findViewById(R.id.RecyclerView);
-        ListActivityAdapter adapter=new ListActivityAdapter(name,description,ListActivity.this);
+        ListActivityAdapter adapter=new ListActivityAdapter(userList,ListActivity.this);
         LinearLayoutManager layout=new LinearLayoutManager(this);
         rv.setLayoutManager(layout);
         rv.setAdapter(adapter);
-
     }
 }

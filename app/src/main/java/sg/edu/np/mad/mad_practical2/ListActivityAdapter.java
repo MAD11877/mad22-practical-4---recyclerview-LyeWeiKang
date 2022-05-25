@@ -15,12 +15,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ListActivityAdapter extends RecyclerView.Adapter<ListActivityViewHolder> {
-    ArrayList<String> Name;
-    ArrayList<String>Description;
+    ArrayList<User> userList;
     ListActivity activity;
-    public ListActivityAdapter(ArrayList<String>Name,ArrayList<String>Description,ListActivity activity){
-        this.Name=Name;
-        this.Description=Description;
+    public ListActivityAdapter(ArrayList<User>userList,ListActivity activity){
+        this.userList=userList;
         this.activity=activity;
     }
     @NonNull
@@ -33,40 +31,33 @@ public class ListActivityAdapter extends RecyclerView.Adapter<ListActivityViewHo
             item= LayoutInflater.from(parent.getContext()).inflate(R.layout.listactivity_rcv,null,false);
 
 
-
         return new ListActivityViewHolder(item);
     }
     @Override
     public int getItemViewType(int position) {
-        String n = Name.get(position);
-        if(Character.toString(n.charAt(n.length() - 1)).equals("7"))
+        User n = userList.get(position);
+        if(Character.toString(n.name.charAt(n.name.length() - 1)).equals("7"))
             return 0;
         else
             return 1;
-
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListActivityViewHolder holder, int position) {
-        String n=Name.get(position);
-        holder.name.setText(n);
-        String d=Description.get(position);
-        holder.description.setText(d);
+        User n=userList.get(position);
+        holder.name.setText(n.name);
+        holder.description.setText(n.description);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder ad = new AlertDialog.Builder(activity);
                 ad.setTitle("Profile");
-                ad.setMessage(n);
+                ad.setMessage(n.name);
                 ad.setPositiveButton("View", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent=new Intent(activity,MainActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putString("name",n);
-                        extras.putString("description",d);
-                        intent.putExtras(extras);
+                        intent.putExtra("user",n);
                         activity.startActivity(intent);
                     }
                 });
@@ -83,6 +74,6 @@ public class ListActivityAdapter extends RecyclerView.Adapter<ListActivityViewHo
 
     @Override
     public int getItemCount() {
-        return Name.size();
+        return userList.size();
     }
 }
